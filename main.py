@@ -1,16 +1,27 @@
-# This is a sample Python script.
+"""
+Entry point for the Naive RAG pipeline (Stage 2: integration).
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+This script is responsible for:
+- loading optimal RAG parameters,
+- initializing the RAG pipeline using components prepared by teammates
+  (vector store, retriever, LLM configuration),
+- providing a simple CLI to interact with the system.
+"""
+
+from rag_config import load_config
+from pipeline import init_rag_pipeline, run_cli_session
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def main() -> None:
+    """
+    Initialize the Naive RAG pipeline with optimal parameters
+    and start an interactive CLI loop.
+    """
+    config = load_config()
+    rag_chain = init_rag_pipeline(config)
+    run_cli_session(rag_chain, config)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+if __name__ == "__main__":
+    main()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
