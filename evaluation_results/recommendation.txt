@@ -1,0 +1,4 @@
+--- Recommendation ---
+Best Strategy: Fixed-200
+Reason: It achieved the highest average coherence score of 0.8859, 
+with a variance of 0.0123 across 40 chunks.

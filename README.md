@@ -109,3 +109,48 @@ result = validate_extraction_with_llm(
     client
 )
 ```
+
+---
+
+## Step 2: Chunking Coherence Evaluation
+
+### Overview
+
+`step2_chunking_coherence_evaluation.py` takes the extracted text from Step 1 and evaluates various text chunking strategies. The goal is to find the strategy that produces the most semantically coherent chunks, which is crucial for retrieval quality in a RAG system.
+
+### Requirements
+
+Activate your virtual environment (`source venv/bin/activate`) and run:
+```bash
+pip install langchain-text-splitters sentence-transformers langchain langchain_experimental langchain_community numpy matplotlib seaborn pandas scikit-learn "urllib3<2.0"
+```
+
+### How it Works
+
+The script performs the following actions:
+1.  **Loads Data**: Reads the `.md` files from the `extraction_output/` directory.
+2.  **Applies Chunking Strategies**: It splits the text using different methods:
+    - Fixed-size chunking (by token count)
+    - Sentence-based chunking (by number of sentences)
+    - Recursive chunking
+    - Semantic chunking
+3.  **Calculates Coherence**: For each chunk, it calculates a "Semantic Coherence Score" by embedding the sentences within the chunk and measuring their cosine similarity to the chunk's average embedding (centroid).
+4.  **Generates Results**: It analyzes the scores for all strategies and determines the best one.
+
+### Usage
+
+Ensure you have run Step 1 first to generate the `extraction_output` directory. Then, run the script from your terminal:
+```bash
+python step2_chunking_coherence_evaluation.py
+```
+
+### Output
+
+The script creates the `evaluation_results/` directory with the following files:
+
+| File | Description |
+|------|-------------|
+| `coherence_results.csv` | A CSV table summarizing the performance of each chunking method (Avg Coherence, Avg Variance, Num Chunks). |
+| `avg_coherence_chart.png` | A bar chart visualizing the average coherence score for each strategy. |
+| `coherence_distribution_boxplot.png` | A box plot showing the distribution of coherence scores for each strategy. |
+| `recommendation.txt` | A text file with a recommendation for the best-performing chunking strategy based on the analysis. |
